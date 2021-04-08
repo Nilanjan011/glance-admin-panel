@@ -27,8 +27,10 @@
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                  <li><a href="forms.php"><i class="fa fa-angle-right"></i> Student Form</a></li>
-                  <li><a href="tables.php"><i class="fa fa-angle-right"></i> Student Table</a></li>
+                 <!--  <li><a href="forms.php"><i class="fa fa-angle-right"></i> Student Form</a></li>
+                  <li><a href="tables.php"><i class="fa fa-angle-right"></i> Student Table</a></li> -->
+                  <li><a href="student.php?case=display_teacher"><i class="fa fa-angle-right"></i> Teacher Table</a></li>
+                  <li><a href="student.php?case=display_student1"><i class="fa fa-angle-right"></i> Student Table</a></li>
                 </ul>
               </li>
               <li class="treeview">

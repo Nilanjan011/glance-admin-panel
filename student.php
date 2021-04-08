@@ -1,8 +1,16 @@
 <?php 
+session_start();
+
 include_once("db.php");
 
 include_once("header.php");
 include_once("sidebar.php");
+include_once("navbar.php");
+if ( !isset($_SESSION['email'])){
+ 	 header('location: ' . $_SERVER['HTTP_REFERER']);
+	// header('location: login.php');
+	// return; 
+}
 
 if ($_REQUEST['case']=="edit"){
 
@@ -13,192 +21,6 @@ if ($_REQUEST['case']=="edit"){
 	$id=$_GET['id'];
 ?>
 
-<div class="sticky-header header-section ">
-			<div class="header-left">
-				
-				<!--toggle button start-->
-				<button id="showLeftPush"><i class="fa fa-bars"></i></button>
-				<!--toggle button end-->
-				<div class="profile_details_left"><!--notifications of menu start -->
-					<ul class="nofitications-dropdown">
-					<!-- 	<li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">4</span></a>
-							<ul class="dropdown-menu">
-								<li>
-									<div class="notification_header">
-										<h3>You have 3 new messages</h3>
-									</div>
-								</li>
-								<li><a href="#">
-								   <div class="user_img"><img src="images/1.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet</p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								   <div class="clearfix"></div>	
-								</a></li>
-								<li class="odd"><a href="#">
-									<div class="user_img"><img src="images/4.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet </p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								  <div class="clearfix"></div>	
-								</a></li>
-								<li><a href="#">
-								   <div class="user_img"><img src="images/3.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet </p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								   <div class="clearfix"></div>	
-								</a></li>
-								<li>
-									<div class="notification_bottom">
-										<a href="#">See all messages</a>
-									</div> 
-								</li>
-							</ul>
-						</li> -->
-						<!-- <li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue">4</span></a>
-							<ul class="dropdown-menu">
-								<li>
-									<div class="notification_header">
-										<h3>You have 3 new notification</h3>
-									</div>
-								</li>
-								<li><a href="#">
-									<div class="user_img"><img src="images/4.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet</p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								  <div class="clearfix"></div>	
-								 </a></li>
-								 <li class="odd"><a href="#">
-									<div class="user_img"><img src="images/1.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet </p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								   <div class="clearfix"></div>	
-								 </a></li>
-								 <li><a href="#">
-									<div class="user_img"><img src="images/3.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet </p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								   <div class="clearfix"></div>	
-								 </a></li>
-								 <li>
-									<div class="notification_bottom">
-										<a href="#">See all notifications</a>
-									</div> 
-								</li>
-							</ul>
-						</li> -->	
-						<!-- <li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-tasks"></i><span class="badge blue1">8</span></a>
-							<ul class="dropdown-menu"> -->
-								<!-- <li>
-									<div class="notification_header">
-										<h3>You have 8 pending task</h3>
-									</div>
-								</li> -->
-								<!-- <li><a href="#">
-									<div class="task-info">
-										<span class="task-desc">Database update</span><span class="percentage">40%</span>
-										<div class="clearfix"></div>	
-									</div>
-									<div class="progress progress-striped active">
-										<div class="bar yellow" style="width:40%;"></div>
-									</div>
-								</a></li> -->
-								<!-- <li><a href="#">
-									<div class="task-info">
-										<span class="task-desc">Dashboard done</span><span class="percentage">90%</span>
-									   <div class="clearfix"></div>	
-									</div>
-									<div class="progress progress-striped active">
-										 <div class="bar green" style="width:90%;"></div>
-									</div>
-								</a></li> -->
-<!-- 								<li><a href="#">
-									<div class="task-info">
-										<span class="task-desc">Mobile App</span><span class="percentage">33%</span>
-										<div class="clearfix"></div>	
-									</div>
-								   <div class="progress progress-striped active">
-										 <div class="bar red" style="width: 33%;"></div>
-									</div>
-								</a></li> -->
-								<!-- <li><a href="#">
-									<div class="task-info">
-										<span class="task-desc">Issues fixed</span><span class="percentage">80%</span>
-									   <div class="clearfix"></div>	
-									</div>
-									<div class="progress progress-striped active">
-										 <div class="bar  blue" style="width: 80%;"></div>
-									</div>
-								</a></li>
-								<li>
-									<div class="notification_bottom">
-										<a href="#">See all pending tasks</a>
-									</div> 
-								</li> -->
-				<!-- 			</ul>
-						</li>	
-					</ul> -->
-					<div class="clearfix"> </div>
-				</div>
-				<!--notification menu end -->
-				<div class="clearfix"> </div>
-			</div>
-			<div class="header-right">
-				
-				
-				<!--search-box-->
-				<!-- <div class="search-box">
-					<form class="input">
-						<input class="sb-search-input input__field--madoka" placeholder="Search..." type="search" id="input-31" />
-						<label class="input__label" for="input-31">
-							<svg class="graphic" width="100%" height="100%" viewBox="0 0 404 77" preserveAspectRatio="none">
-								<path d="m0,0l404,0l0,77l-404,0l0,-77z"/>
-							</svg>
-						</label>
-					</form>
-				</div> --><!--//end-search-box-->
-				
-				<div class="profile_details">		
-					<ul>
-						<li class="dropdown profile_details_drop">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-								<div class="profile_img">	
-									<span class="prfil-img"><img src="images/2.jpg" alt=""> </span> 
-									<div class="user-name">
-										<p>Admin Name</p>
-										<span>Administrator</span>
-									</div>
-									<i class="fa fa-angle-down lnr"></i>
-									<i class="fa fa-angle-up lnr"></i>
-									<div class="clearfix"></div>	
-								</div>	
-							</a>
-							<ul class="dropdown-menu drp-mnu">
-								<li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li> 
-								<li> <a href="#"><i class="fa fa-user"></i> My Account</a> </li>
-								<li> <a href="#"><i class="fa fa-suitcase"></i> Profile</a> </li> 
-								<li> <a href="#"><i class="fa fa-sign-out"></i> Logout</a> </li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-				<div class="clearfix"> </div>				
-			</div>
-			<div class="clearfix"> </div>	
-		</div>
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<div id="page-wrapper">
@@ -226,297 +48,7 @@ if ($_REQUEST['case']=="edit"){
 							   <input type="file" id="exampleInputFile" name="image"> <p class="help-block">Example block-level help text here.</p> </div> <div class="checkbox"> <label> <input type="checkbox"> Check me out </label> </div> <button type="submit" class="btn btn-default">Submit</button> </form> 
 						</div>
 					</div>
-			<!-- 		<div class=" form-grids row form-grids-right">
-						<div class="widget-shadow " data-example-id="basic-forms"> 
-							<div class="form-title">
-								<h4>Horizontal form :</h4>
-							</div>
-							<div class="form-body">
-								<form class="form-horizontal"> <div class="form-group"> <label for="inputEmail3" class="col-sm-2 control-label">Email</label> <div class="col-sm-9"> <input type="email" class="form-control" id="inputEmail3" placeholder="Email"> </div> </div> <div class="form-group"> <label for="inputPassword3" class="col-sm-2 control-label">Password</label> <div class="col-sm-9"> <input type="password" class="form-control" id="inputPassword3" placeholder="Password"> </div> </div> <div class="form-group"> <div class="col-sm-offset-2 col-sm-10"> <div class="checkbox"> <label> <input type="checkbox"> Remember me </label> </div> </div> </div> <div class="col-sm-offset-2"> <button type="submit" class="btn btn-default">Sign in</button> </div> </form> 
-							</div>
-						</div>
-					</div> -->
-					<!-- <div class="inline-form widget-shadow">
-						<div class="form-title">
-							<h4>Inline form Example 1 :</h4>
-						</div>
-						<div class="form-body">
-							<div data-example-id="simple-form-inline"> <form class="form-inline"> <div class="form-group"> <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email"> </div> <div class="form-group"> <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password"> </div> <div class="checkbox"> <label> <input type="checkbox"> Remember me </label> </div> <button type="submit" class="btn btn-default">Sign in</button> </form> </div>
-						</div>
-					</div> -->
-		<!-- 			<div class="form-two widget-shadow">
-						<div class="form-title">
-							<h4>Inline form Example 2 :</h4>
-						</div>
-						<div class="form-body" data-example-id="simple-form-inline">
-							<form class="form-inline"> <div class="form-group"> <label for="exampleInputName2">Name</label> <input type="text" class="form-control" id="exampleInputName2" placeholder="Your name"> </div> <div class="form-group"> <label for="exampleInputEmail2">Email</label> <input type="email" class="form-control" id="exampleInputEmail2" placeholder="mail.abc@example.com"> </div> <button type="submit" class="btn btn-default">Send invitation</button> </form> 
-						</div>
-					</div> -->
-					<!-- <div class="row">
-						<h3 class="title1">General Form :</h3>
-						<div class="form-three widget-shadow">
-							<form class="form-horizontal">
-								<div class="form-group">
-									<label for="focusedinput" class="col-sm-2 control-label">Focused Input</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control1" id="focusedinput" placeholder="Default Input">
-									</div>
-									<div class="col-sm-2">
-										<p class="help-block">Your help text!</p>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="disabledinput" class="col-sm-2 control-label">Disabled Input</label>
-									<div class="col-sm-8">
-										<input disabled="" type="text" class="form-control1" id="disabledinput" placeholder="Disabled Input">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputPassword" class="col-sm-2 control-label">Password</label>
-									<div class="col-sm-8">
-										<input type="password" class="form-control1" id="inputPassword" placeholder="Password">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="checkbox" class="col-sm-2 control-label">Checkbox</label>
-									<div class="col-sm-8">
-										<div class="checkbox-inline1"><label><input type="checkbox"> Unchecked</label></div>
-										<div class="checkbox-inline1"><label><input type="checkbox" checked=""> Checked</label></div>
-										<div class="checkbox-inline1"><label><input type="checkbox" disabled=""> Disabled Unchecked</label></div>
-										<div class="checkbox-inline1"><label><input type="checkbox" disabled="" checked=""> Disabled Checked</label></div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="checkbox" class="col-sm-2 control-label">Checkbox Inline</label>
-									<div class="col-sm-8">
-										<div class="checkbox-inline"><label><input type="checkbox"> Unchecked</label></div>
-										<div class="checkbox-inline"><label><input type="checkbox" checked=""> Checked</label></div>
-										<div class="checkbox-inline"><label><input type="checkbox" disabled=""> Disabled Unchecked</label></div>
-										<div class="checkbox-inline"><label><input type="checkbox" disabled="" checked=""> Disabled Checked</label></div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="selector1" class="col-sm-2 control-label">Dropdown Select</label>
-									<div class="col-sm-8"><select name="selector1" id="selector1" class="form-control1">
-										<option>Lorem ipsum dolor sit amet.</option>
-										<option>Dolore, ab unde modi est!</option>
-										<option>Illum, fuga minus sit eaque.</option>
-										<option>Consequatur ducimus maiores voluptatum minima.</option>
-									</select></div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">Multiple Select</label>
-									<div class="col-sm-8">
-										<select multiple="" class="form-control1">
-											<option>Option 1</option>
-											<option>Option 2</option>
-											<option>Option 3</option>
-											<option>Option 4</option>
-											<option>Option 5</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="txtarea1" class="col-sm-2 control-label">Textarea</label>
-									<div class="col-sm-8"><textarea name="txtarea1" id="txtarea1" cols="50" rows="4" class="form-control1"></textarea></div>
-								</div>
-								<div class="form-group">
-									<label for="radio" class="col-sm-2 control-label">Radio</label>
-									<div class="col-sm-8">
-										<div class="radio block"><label><input type="radio"> Unchecked</label></div>
-										<div class="radio block"><label><input type="radio" checked=""> Checked</label></div>
-										<div class="radio block"><label><input type="radio" disabled=""> Disabled Unchecked</label></div>
-										<div class="radio block"><label><input type="radio" disabled="" checked=""> Disabled Checked</label></div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="radio" class="col-sm-2 control-label">Radio Inline</label>
-									<div class="col-sm-8">
-										<div class="radio-inline"><label><input type="radio"> Unchecked</label></div>
-										<div class="radio-inline"><label><input type="radio" checked=""> Checked</label></div>
-										<div class="radio-inline"><label><input type="radio" disabled=""> Disabled Unchecked</label></div>
-										<div class="radio-inline"><label><input type="radio" disabled="" checked=""> Disabled Checked</label></div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="smallinput" class="col-sm-2 control-label label-input-sm">Small Input</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control1 input-sm" id="smallinput" placeholder="Small Input">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="mediuminput" class="col-sm-2 control-label">Medium Input</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control1" id="mediuminput" placeholder="Medium Input">
-									</div>
-								</div>
-								<div class="form-group mb-n">
-									<label for="largeinput" class="col-sm-2 control-label label-input-lg">Large Input</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control1 input-lg" id="largeinput" placeholder="Large Input">
-									</div>
-								</div>
-							</form>
-						</div>
-					</div> -->
-					<!-- <div class="row">
-						<h3 class="title1">Variable Forms :</h3>
-						<div class="form-three widget-shadow">
-							<div data-example-id="form-validation-states-with-icons"> <form> <div class="form-group has-success has-feedback"> <label class="control-label" for="inputSuccess2">Input with success</label> <input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status"> <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span> <span id="inputSuccess2Status" class="sr-only">(success)</span> </div> <div class="form-group has-warning has-feedback"> <label class="control-label" for="inputWarning2">Input with warning</label> <input type="text" class="form-control" id="inputWarning2" aria-describedby="inputWarning2Status"> <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span> <span id="inputWarning2Status" class="sr-only">(warning)</span> </div> <div class="form-group has-error has-feedback"> <label class="control-label" for="inputError2">Input with error</label> <input type="text" class="form-control" id="inputError2" aria-describedby="inputError2Status"> <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span> <span id="inputError2Status" class="sr-only">(error)</span> </div> <div class="form-group has-success has-feedback"> <label class="control-label" for="inputGroupSuccess1">Input group with success</label> <div class="input-group"> <span class="input-group-addon">@</span> <input type="text" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status"> </div> <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span> <span id="inputGroupSuccess1Status" class="sr-only">(success)</span> </div> </form> </div>
-						</div>
-						<div class="form-three widget-shadow">
-							<div class=" panel-body-inputin">
-								<form class="form-horizontal">
-									<div class="form-group">
-										<label class="col-md-2 control-label">Email Address</label>
-										<div class="col-md-8">
-											<div class="input-group">							
-												<span class="input-group-addon">
-													<i class="fa fa-envelope-o"></i>
-												</span>
-												<input type="text" class="form-control1" placeholder="Email Address">
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Password</label>
-										<div class="col-md-8">
-											<div class="input-group">
-												<span class="input-group-addon">
-													<i class="fa fa-key"></i>
-												</span>
-												<input type="password" class="form-control1" id="exampleInputPassword1" placeholder="Password">
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Email Address</label>
-										<div class="col-md-8">
-											<div class="input-group input-icon right">
-												<span class="input-group-addon">
-													<i class="fa fa-envelope-o"></i>
-												</span>
-												<input id="email" class="form-control1" type="text" placeholder="Email Address">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">With tooltip</p>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Password</label>
-										<div class="col-md-8">
-											<div class="input-group input-icon right">
-												<span class="input-group-addon">
-													<i class="fa fa-key"></i>
-												</span>
-												<input type="password" class="form-control1" placeholder="Password">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">With tooltip</p>
-										</div>
-									</div>
-									<div class="form-group has-success">
-										<label class="col-md-2 control-label">Input Addon Success</label>
-										<div class="col-md-8">
-											<div class="input-group input-icon right">
-												<span class="input-group-addon">
-													<i class="fa fa-envelope-o"></i>
-												</span>
-												<input id="email" class="form-control1" type="text" placeholder="Email Address">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">Email is valid!</p>
-										</div>
-									</div>
-									<div class="form-group has-error">
-										<label class="col-md-2 control-label">Input Addon Error</label>
-										<div class="col-md-8">
-											<div class="input-group input-icon right">
-												<span class="input-group-addon">
-													<i class="fa fa-key"></i>
-												</span>
-												<input type="password" class="form-control1" placeholder="Password">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">Error!</p>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Checkbox Addon</label>
-										<div class="col-md-8">
-											<div class="input-group">
-												<div class="input-group-addon"><input type="checkbox"></div>
-												<input type="text" class="form-control1">
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Checkbox Addon</label>
-										<div class="col-md-8">
-											<div class="input-group">
-												<input type="text" class="form-control1">
-												<div class="input-group-addon"><input type="checkbox"></div>
-												
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">Checkbox on right</p>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Radio Addon</label>
-										<div class="col-md-8">
-											<div class="input-group">
-												<div class="input-group-addon"><input type="radio"></div>
-												<input type="text" class="form-control1">
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Radio Addon</label>
-										<div class="col-md-8">
-											<div class="input-group">
-												<input type="text" class="form-control1">
-												<div class="input-group-addon"><input type="radio"></div>
-												
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">Radio on right</p>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Input Processing</label>
-										<div class="col-md-8">
-											<div class="input-icon right spinner">
-												<i class="fa fa-fw fa-spin fa-spinner"></i>
-												<input id="email" class="form-control1" type="text" placeholder="Processing...">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">Processing right</p>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Static Paragraph</label>
-										<div class="col-md-8">
-											<p class="form-control1 m-n">email@example.com</p>
-										</div>
-									</div>
-									<div class="form-group mb-n">
-										<label class="col-md-2 control-label">Readonly</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control1" placeholder="Readonly" readonly="">
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div> -->
+			<!-- 		
 				</div>
 			</div>
 		</div>
@@ -530,192 +62,6 @@ if ($_REQUEST['case']=="edit"){
 	}
 
 	if ($_REQUEST['case']=="multiple_input") { ?>
-		<div class="sticky-header header-section ">
-			<div class="header-left">
-				
-				<!--toggle button start-->
-				<button id="showLeftPush"><i class="fa fa-bars"></i></button>
-				<!--toggle button end-->
-				<div class="profile_details_left"><!--notifications of menu start -->
-					<ul class="nofitications-dropdown">
-					<!-- 	<li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">4</span></a>
-							<ul class="dropdown-menu">
-								<li>
-									<div class="notification_header">
-										<h3>You have 3 new messages</h3>
-									</div>
-								</li>
-								<li><a href="#">
-								   <div class="user_img"><img src="images/1.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet</p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								   <div class="clearfix"></div>	
-								</a></li>
-								<li class="odd"><a href="#">
-									<div class="user_img"><img src="images/4.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet </p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								  <div class="clearfix"></div>	
-								</a></li>
-								<li><a href="#">
-								   <div class="user_img"><img src="images/3.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet </p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								   <div class="clearfix"></div>	
-								</a></li>
-								<li>
-									<div class="notification_bottom">
-										<a href="#">See all messages</a>
-									</div> 
-								</li>
-							</ul>
-						</li> -->
-						<!-- <li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue">4</span></a>
-							<ul class="dropdown-menu">
-								<li>
-									<div class="notification_header">
-										<h3>You have 3 new notification</h3>
-									</div>
-								</li>
-								<li><a href="#">
-									<div class="user_img"><img src="images/4.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet</p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								  <div class="clearfix"></div>	
-								 </a></li>
-								 <li class="odd"><a href="#">
-									<div class="user_img"><img src="images/1.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet </p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								   <div class="clearfix"></div>	
-								 </a></li>
-								 <li><a href="#">
-									<div class="user_img"><img src="images/3.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet </p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								   <div class="clearfix"></div>	
-								 </a></li>
-								 <li>
-									<div class="notification_bottom">
-										<a href="#">See all notifications</a>
-									</div> 
-								</li>
-							</ul>
-						</li> -->	
-						<!-- <li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-tasks"></i><span class="badge blue1">8</span></a>
-							<ul class="dropdown-menu"> -->
-								<!-- <li>
-									<div class="notification_header">
-										<h3>You have 8 pending task</h3>
-									</div>
-								</li> -->
-								<!-- <li><a href="#">
-									<div class="task-info">
-										<span class="task-desc">Database update</span><span class="percentage">40%</span>
-										<div class="clearfix"></div>	
-									</div>
-									<div class="progress progress-striped active">
-										<div class="bar yellow" style="width:40%;"></div>
-									</div>
-								</a></li> -->
-								<!-- <li><a href="#">
-									<div class="task-info">
-										<span class="task-desc">Dashboard done</span><span class="percentage">90%</span>
-									   <div class="clearfix"></div>	
-									</div>
-									<div class="progress progress-striped active">
-										 <div class="bar green" style="width:90%;"></div>
-									</div>
-								</a></li> -->
-<!-- 								<li><a href="#">
-									<div class="task-info">
-										<span class="task-desc">Mobile App</span><span class="percentage">33%</span>
-										<div class="clearfix"></div>	
-									</div>
-								   <div class="progress progress-striped active">
-										 <div class="bar red" style="width: 33%;"></div>
-									</div>
-								</a></li> -->
-								<!-- <li><a href="#">
-									<div class="task-info">
-										<span class="task-desc">Issues fixed</span><span class="percentage">80%</span>
-									   <div class="clearfix"></div>	
-									</div>
-									<div class="progress progress-striped active">
-										 <div class="bar  blue" style="width: 80%;"></div>
-									</div>
-								</a></li>
-								<li>
-									<div class="notification_bottom">
-										<a href="#">See all pending tasks</a>
-									</div> 
-								</li> -->
-				<!-- 			</ul>
-						</li>	
-					</ul> -->
-					<div class="clearfix"> </div>
-				</div>
-				<!--notification menu end -->
-				<div class="clearfix"> </div>
-			</div>
-			<div class="header-right">
-				
-				
-				<!--search-box-->
-				<!-- <div class="search-box">
-					<form class="input">
-						<input class="sb-search-input input__field--madoka" placeholder="Search..." type="search" id="input-31" />
-						<label class="input__label" for="input-31">
-							<svg class="graphic" width="100%" height="100%" viewBox="0 0 404 77" preserveAspectRatio="none">
-								<path d="m0,0l404,0l0,77l-404,0l0,-77z"/>
-							</svg>
-						</label>
-					</form>
-				</div> --><!--//end-search-box-->
-				
-				<div class="profile_details">		
-					<ul>
-						<li class="dropdown profile_details_drop">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-								<div class="profile_img">	
-									<span class="prfil-img"><img src="images/2.jpg" alt=""> </span> 
-									<div class="user-name">
-										<p>Admin Name</p>
-										<span>Administrator</span>
-									</div>
-									<i class="fa fa-angle-down lnr"></i>
-									<i class="fa fa-angle-up lnr"></i>
-									<div class="clearfix"></div>	
-								</div>	
-							</a>
-							<ul class="dropdown-menu drp-mnu">
-								<li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li> 
-								<li> <a href="#"><i class="fa fa-user"></i> My Account</a> </li>
-								<li> <a href="#"><i class="fa fa-suitcase"></i> Profile</a> </li> 
-								<li> <a href="#"><i class="fa fa-sign-out"></i> Logout</a> </li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-				<div class="clearfix"> </div>				
-			</div>
-			<div class="clearfix"> </div>	
-		</div>
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<div id="page-wrapper">
@@ -787,298 +133,7 @@ if ($_REQUEST['case']=="edit"){
 						}
 
 					</script>
-			<!-- 		<div class=" form-grids row form-grids-right">
-						<div class="widget-shadow " data-example-id="basic-forms"> 
-							<div class="form-title">
-								<h4>Horizontal form :</h4>
-							</div>
-							<div class="form-body">
-								<form class="form-horizontal"> <div class="form-group"> <label for="inputEmail3" class="col-sm-2 control-label">Email</label> <div class="col-sm-9"> <input type="email" class="form-control" id="inputEmail3" placeholder="Email"> </div> </div> <div class="form-group"> <label for="inputPassword3" class="col-sm-2 control-label">Password</label> <div class="col-sm-9"> <input type="password" class="form-control" id="inputPassword3" placeholder="Password"> </div> </div> <div class="form-group"> <div class="col-sm-offset-2 col-sm-10"> <div class="checkbox"> <label> <input type="checkbox"> Remember me </label> </div> </div> </div> <div class="col-sm-offset-2"> <button type="submit" class="btn btn-default">Sign in</button> </div> </form> 
-							</div>
-						</div>
-					</div> -->
-					<!-- <div class="inline-form widget-shadow">
-						<div class="form-title">
-							<h4>Inline form Example 1 :</h4>
-						</div>
-						<div class="form-body">
-							<div data-example-id="simple-form-inline"> <form class="form-inline"> <div class="form-group"> <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email"> </div> <div class="form-group"> <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password"> </div> <div class="checkbox"> <label> <input type="checkbox"> Remember me </label> </div> <button type="submit" class="btn btn-default">Sign in</button> </form> </div>
-						</div>
-					</div> -->
-		<!-- 			<div class="form-two widget-shadow">
-						<div class="form-title">
-							<h4>Inline form Example 2 :</h4>
-						</div>
-						<div class="form-body" data-example-id="simple-form-inline">
-							<form class="form-inline"> <div class="form-group"> <label for="exampleInputName2">Name</label> <input type="text" class="form-control" id="exampleInputName2" placeholder="Your name"> </div> <div class="form-group"> <label for="exampleInputEmail2">Email</label> <input type="email" class="form-control" id="exampleInputEmail2" placeholder="mail.abc@example.com"> </div> <button type="submit" class="btn btn-default">Send invitation</button> </form> 
-						</div>
-					</div> -->
-					<!-- <div class="row">
-						<h3 class="title1">General Form :</h3>
-						<div class="form-three widget-shadow">
-							<form class="form-horizontal">
-								<div class="form-group">
-									<label for="focusedinput" class="col-sm-2 control-label">Focused Input</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control1" id="focusedinput" placeholder="Default Input">
-									</div>
-									<div class="col-sm-2">
-										<p class="help-block">Your help text!</p>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="disabledinput" class="col-sm-2 control-label">Disabled Input</label>
-									<div class="col-sm-8">
-										<input disabled="" type="text" class="form-control1" id="disabledinput" placeholder="Disabled Input">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputPassword" class="col-sm-2 control-label">Password</label>
-									<div class="col-sm-8">
-										<input type="password" class="form-control1" id="inputPassword" placeholder="Password">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="checkbox" class="col-sm-2 control-label">Checkbox</label>
-									<div class="col-sm-8">
-										<div class="checkbox-inline1"><label><input type="checkbox"> Unchecked</label></div>
-										<div class="checkbox-inline1"><label><input type="checkbox" checked=""> Checked</label></div>
-										<div class="checkbox-inline1"><label><input type="checkbox" disabled=""> Disabled Unchecked</label></div>
-										<div class="checkbox-inline1"><label><input type="checkbox" disabled="" checked=""> Disabled Checked</label></div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="checkbox" class="col-sm-2 control-label">Checkbox Inline</label>
-									<div class="col-sm-8">
-										<div class="checkbox-inline"><label><input type="checkbox"> Unchecked</label></div>
-										<div class="checkbox-inline"><label><input type="checkbox" checked=""> Checked</label></div>
-										<div class="checkbox-inline"><label><input type="checkbox" disabled=""> Disabled Unchecked</label></div>
-										<div class="checkbox-inline"><label><input type="checkbox" disabled="" checked=""> Disabled Checked</label></div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="selector1" class="col-sm-2 control-label">Dropdown Select</label>
-									<div class="col-sm-8"><select name="selector1" id="selector1" class="form-control1">
-										<option>Lorem ipsum dolor sit amet.</option>
-										<option>Dolore, ab unde modi est!</option>
-										<option>Illum, fuga minus sit eaque.</option>
-										<option>Consequatur ducimus maiores voluptatum minima.</option>
-									</select></div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">Multiple Select</label>
-									<div class="col-sm-8">
-										<select multiple="" class="form-control1">
-											<option>Option 1</option>
-											<option>Option 2</option>
-											<option>Option 3</option>
-											<option>Option 4</option>
-											<option>Option 5</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="txtarea1" class="col-sm-2 control-label">Textarea</label>
-									<div class="col-sm-8"><textarea name="txtarea1" id="txtarea1" cols="50" rows="4" class="form-control1"></textarea></div>
-								</div>
-								<div class="form-group">
-									<label for="radio" class="col-sm-2 control-label">Radio</label>
-									<div class="col-sm-8">
-										<div class="radio block"><label><input type="radio"> Unchecked</label></div>
-										<div class="radio block"><label><input type="radio" checked=""> Checked</label></div>
-										<div class="radio block"><label><input type="radio" disabled=""> Disabled Unchecked</label></div>
-										<div class="radio block"><label><input type="radio" disabled="" checked=""> Disabled Checked</label></div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="radio" class="col-sm-2 control-label">Radio Inline</label>
-									<div class="col-sm-8">
-										<div class="radio-inline"><label><input type="radio"> Unchecked</label></div>
-										<div class="radio-inline"><label><input type="radio" checked=""> Checked</label></div>
-										<div class="radio-inline"><label><input type="radio" disabled=""> Disabled Unchecked</label></div>
-										<div class="radio-inline"><label><input type="radio" disabled="" checked=""> Disabled Checked</label></div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="smallinput" class="col-sm-2 control-label label-input-sm">Small Input</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control1 input-sm" id="smallinput" placeholder="Small Input">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="mediuminput" class="col-sm-2 control-label">Medium Input</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control1" id="mediuminput" placeholder="Medium Input">
-									</div>
-								</div>
-								<div class="form-group mb-n">
-									<label for="largeinput" class="col-sm-2 control-label label-input-lg">Large Input</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control1 input-lg" id="largeinput" placeholder="Large Input">
-									</div>
-								</div>
-							</form>
-						</div>
-					</div> -->
-					<!-- <div class="row">
-						<h3 class="title1">Variable Forms :</h3>
-						<div class="form-three widget-shadow">
-							<div data-example-id="form-validation-states-with-icons"> <form> <div class="form-group has-success has-feedback"> <label class="control-label" for="inputSuccess2">Input with success</label> <input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status"> <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span> <span id="inputSuccess2Status" class="sr-only">(success)</span> </div> <div class="form-group has-warning has-feedback"> <label class="control-label" for="inputWarning2">Input with warning</label> <input type="text" class="form-control" id="inputWarning2" aria-describedby="inputWarning2Status"> <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span> <span id="inputWarning2Status" class="sr-only">(warning)</span> </div> <div class="form-group has-error has-feedback"> <label class="control-label" for="inputError2">Input with error</label> <input type="text" class="form-control" id="inputError2" aria-describedby="inputError2Status"> <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span> <span id="inputError2Status" class="sr-only">(error)</span> </div> <div class="form-group has-success has-feedback"> <label class="control-label" for="inputGroupSuccess1">Input group with success</label> <div class="input-group"> <span class="input-group-addon">@</span> <input type="text" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status"> </div> <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span> <span id="inputGroupSuccess1Status" class="sr-only">(success)</span> </div> </form> </div>
-						</div>
-						<div class="form-three widget-shadow">
-							<div class=" panel-body-inputin">
-								<form class="form-horizontal">
-									<div class="form-group">
-										<label class="col-md-2 control-label">Email Address</label>
-										<div class="col-md-8">
-											<div class="input-group">							
-												<span class="input-group-addon">
-													<i class="fa fa-envelope-o"></i>
-												</span>
-												<input type="text" class="form-control1" placeholder="Email Address">
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Password</label>
-										<div class="col-md-8">
-											<div class="input-group">
-												<span class="input-group-addon">
-													<i class="fa fa-key"></i>
-												</span>
-												<input type="password" class="form-control1" id="exampleInputPassword1" placeholder="Password">
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Email Address</label>
-										<div class="col-md-8">
-											<div class="input-group input-icon right">
-												<span class="input-group-addon">
-													<i class="fa fa-envelope-o"></i>
-												</span>
-												<input id="email" class="form-control1" type="text" placeholder="Email Address">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">With tooltip</p>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Password</label>
-										<div class="col-md-8">
-											<div class="input-group input-icon right">
-												<span class="input-group-addon">
-													<i class="fa fa-key"></i>
-												</span>
-												<input type="password" class="form-control1" placeholder="Password">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">With tooltip</p>
-										</div>
-									</div>
-									<div class="form-group has-success">
-										<label class="col-md-2 control-label">Input Addon Success</label>
-										<div class="col-md-8">
-											<div class="input-group input-icon right">
-												<span class="input-group-addon">
-													<i class="fa fa-envelope-o"></i>
-												</span>
-												<input id="email" class="form-control1" type="text" placeholder="Email Address">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">Email is valid!</p>
-										</div>
-									</div>
-									<div class="form-group has-error">
-										<label class="col-md-2 control-label">Input Addon Error</label>
-										<div class="col-md-8">
-											<div class="input-group input-icon right">
-												<span class="input-group-addon">
-													<i class="fa fa-key"></i>
-												</span>
-												<input type="password" class="form-control1" placeholder="Password">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">Error!</p>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Checkbox Addon</label>
-										<div class="col-md-8">
-											<div class="input-group">
-												<div class="input-group-addon"><input type="checkbox"></div>
-												<input type="text" class="form-control1">
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Checkbox Addon</label>
-										<div class="col-md-8">
-											<div class="input-group">
-												<input type="text" class="form-control1">
-												<div class="input-group-addon"><input type="checkbox"></div>
-												
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">Checkbox on right</p>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Radio Addon</label>
-										<div class="col-md-8">
-											<div class="input-group">
-												<div class="input-group-addon"><input type="radio"></div>
-												<input type="text" class="form-control1">
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Radio Addon</label>
-										<div class="col-md-8">
-											<div class="input-group">
-												<input type="text" class="form-control1">
-												<div class="input-group-addon"><input type="radio"></div>
-												
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">Radio on right</p>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Input Processing</label>
-										<div class="col-md-8">
-											<div class="input-icon right spinner">
-												<i class="fa fa-fw fa-spin fa-spinner"></i>
-												<input id="email" class="form-control1" type="text" placeholder="Processing...">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<p class="help-block">Processing right</p>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-md-2 control-label">Static Paragraph</label>
-										<div class="col-md-8">
-											<p class="form-control1 m-n">email@example.com</p>
-										</div>
-									</div>
-									<div class="form-group mb-n">
-										<label class="col-md-2 control-label">Readonly</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control1" placeholder="Readonly" readonly="">
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div> -->
-
+			
 				</div>
 
 			</div>
@@ -1093,192 +148,7 @@ if ($_REQUEST['case']=="edit"){
 	}
 
 		if ($_REQUEST['case']=="class") { ?>
-					<div class="sticky-header header-section ">
-			<div class="header-left">
-				
-				<!--toggle button start-->
-				<button id="showLeftPush"><i class="fa fa-bars"></i></button>
-				<!--toggle button end-->
-				<div class="profile_details_left"><!--notifications of menu start -->
-					<!-- <ul class="nofitications-dropdown">
-						<li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">4</span></a>
-							<ul class="dropdown-menu">
-								<li>
-									<div class="notification_header">
-										<h3>You have 3 new messages</h3>
-									</div>
-								</li>
-								<li><a href="#">
-								   <div class="user_img"><img src="images/1.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet</p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								   <div class="clearfix"></div>	
-								</a></li>
-								<li class="odd"><a href="#">
-									<div class="user_img"><img src="images/4.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet </p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								  <div class="clearfix"></div>	
-								</a></li>
-								<li><a href="#">
-								   <div class="user_img"><img src="images/3.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet </p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								   <div class="clearfix"></div>	
-								</a></li>
-								<li>
-									<div class="notification_bottom">
-										<a href="#">See all messages</a>
-									</div> 
-								</li>
-							</ul>
-						</li>
-						<li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue">4</span></a>
-							<ul class="dropdown-menu">
-								<li>
-									<div class="notification_header">
-										<h3>You have 3 new notification</h3>
-									</div>
-								</li>
-								<li><a href="#">
-									<div class="user_img"><img src="images/4.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet</p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								  <div class="clearfix"></div>	
-								 </a></li>
-								 <li class="odd"><a href="#">
-									<div class="user_img"><img src="images/1.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet </p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								   <div class="clearfix"></div>	
-								 </a></li>
-								 <li><a href="#">
-									<div class="user_img"><img src="images/3.jpg" alt=""></div>
-								   <div class="notification_desc">
-									<p>Lorem ipsum dolor amet </p>
-									<p><span>1 hour ago</span></p>
-									</div>
-								   <div class="clearfix"></div>	
-								 </a></li>
-								 <li>
-									<div class="notification_bottom">
-										<a href="#">See all notifications</a>
-									</div> 
-								</li>
-							</ul>
-						</li>	
-						<li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-tasks"></i><span class="badge blue1">8</span></a>
-							<ul class="dropdown-menu">
-								<li>
-									<div class="notification_header">
-										<h3>You have 8 pending task</h3>
-									</div>
-								</li>
-								<li><a href="#">
-									<div class="task-info">
-										<span class="task-desc">Database update</span><span class="percentage">40%</span>
-										<div class="clearfix"></div>	
-									</div>
-									<div class="progress progress-striped active">
-										<div class="bar yellow" style="width:40%;"></div>
-									</div>
-								</a></li>
-								<li><a href="#">
-									<div class="task-info">
-										<span class="task-desc">Dashboard done</span><span class="percentage">90%</span>
-									   <div class="clearfix"></div>	
-									</div>
-									<div class="progress progress-striped active">
-										 <div class="bar green" style="width:90%;"></div>
-									</div>
-								</a></li>
-								<li><a href="#">
-									<div class="task-info">
-										<span class="task-desc">Mobile App</span><span class="percentage">33%</span>
-										<div class="clearfix"></div>	
-									</div>
-								   <div class="progress progress-striped active">
-										 <div class="bar red" style="width: 33%;"></div>
-									</div>
-								</a></li>
-								<li><a href="#">
-									<div class="task-info">
-										<span class="task-desc">Issues fixed</span><span class="percentage">80%</span>
-									   <div class="clearfix"></div>	
-									</div>
-									<div class="progress progress-striped active">
-										 <div class="bar  blue" style="width: 80%;"></div>
-									</div>
-								</a></li>
-								<li>
-									<div class="notification_bottom">
-										<a href="#">See all pending tasks</a>
-									</div> 
-								</li>
-							</ul>
-						</li>	
-					</ul> -->
-					<div class="clearfix"> </div>
-				</div>
-				<!--notification menu end -->
-				<div class="clearfix"> </div>
-			</div>
-			<div class="header-right">
-				
-				
-				<!--search-box-->
-				<!-- <div class="search-box">
-					<form class="input">
-						<input class="sb-search-input input__fieldmadoka" placeholder="Search..." type="search" id="input-31" />
-						<label class="input__label" for="input-31">
-							<svg class="graphic" width="100%" height="100%" viewBox="0 0 404 77" preserveAspectRatio="none">
-								<path d="m0,0l404,0l0,77l-404,0l0,-77z"/>
-							</svg>
-						</label>
-					</form>
-				</div> --><!--//end-search-box-->
-				
-				<div class="profile_details">		
-					<ul>
-						<li class="dropdown profile_details_drop">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-								<div class="profile_img">	
-									<span class="prfil-img"><img src="images/2.jpg" alt=""> </span> 
-									<div class="user-name">
-										<p>Admin Name</p>
-										<span>Administrator</span>
-									</div>
-									<i class="fa fa-angle-down lnr"></i>
-									<i class="fa fa-angle-up lnr"></i>
-									<div class="clearfix"></div>	
-								</div>	
-							</a>
-							<ul class="dropdown-menu drp-mnu">
-								<li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li> 
-								<li> <a href="#"><i class="fa fa-user"></i> My Account</a> </li>
-								<li> <a href="#"><i class="fa fa-suitcase"></i> Profile</a> </li> 
-								<li> <a href="#"><i class="fa fa-sign-out"></i> Logout</a> </li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-				<div class="clearfix"> </div>				
-			</div>
-			<div class="clearfix"> </div>	
-		</div>
+			
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<div id="page-wrapper">
@@ -1329,6 +199,391 @@ if ($_REQUEST['case']=="edit"){
 	</div>
 	<?php
 		}
+		if ($_REQUEST["case"]=="teacher") { ?>
+		<!-- //header-ends -->
+		<!-- main content start-->
+		<div id="page-wrapper">
+			<div class="main-page">
+				<div class="forms">
+					<h2 class="title1">Forms</h2>
+					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
+						<div class="form-title">
+							<h4>Teacher Form</h4>
+						</div>
+						<div class="form-body">
+							<form action="student-process.php?case=teacher" method="post" enctype="multipart/form-data">
+							 <div class="form-group"> <label for="exampleInputEmail1">Name</label> <input type="name" name="name" class="form-control" id="exampleInputEmail1" placeholder="Name">
+							 </div>
+
+							  <div class="form-group"> <label for="exampleInputPassword1">Email</label> <input type="email" class="form-control" name="email" id="exampleInputPassword1" placeholder="Email">
+							 </div>
+							  <div class="form-group"> <label for="exampleInputPassword1">Address</label> <input type="text" name="address" class="form-control" id="exampleInputPassword1" placeholder="Address">
+							 </div>
+
+							 <div class="form-group"> <label for="exampleInputPassword1">Subject</label> <input type="text" class="form-control" name="subject" id="exampleInputPassword1" placeholder="Subject">
+							 </div>
+
+							 <div class="form-group"> <label for="exampleInputPassword1">Password</label> <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
+							 </div>
+
+							  <div class="form-group"> <label for="exampleInputFile">Image</label> <input type="file" name="image" id="exampleInputFile">
+							  </div>
+							  <button type="submit" class="btn btn-default">Submit</button> 
+						</form> 
+						</div>
+					</div>
+			
+				</div>
+			</div>
+		</div>
+		<!-- footer -->
+		<div class="footer">
+		   <p>&copy; 2018 Glance Design Dashboard. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">w3layouts</a></p>
+	   </div>
+        <!--//footer-->
+	<?php	} ?>
+	<?php
+	if ($_REQUEST['case']=="display_teacher") { ?>
+		<!-- //header-ends -->
+		<!-- main content start-->
+		<div id="page-wrapper">
+			<div class="main-page">
+				<div class="tables">
+					<div class="table-responsive bs-example widget-shadow">
+						<h4>Student Table</h4>
+						<a href="student.php?case=teacher"><button class="btn btn-primary">Add</button></a>
+						<br><br>
+						<table class="table table-bordered"> 
+						<thead>
+						 <tr> 
+						 	<th scope="col">Sl no.</th>
+		                    <th scope="col">Name</th>
+		                    <th scope="col">Eamil</th>
+		                    <th scope="col">image</th>
+		                    <th scope="col">Address</th>
+		                    <th scope="col">Subject</th>
+		                    <th scope="col">Password</th>
+		                    <th scope="col">Update</th>
+		                    <th scope="col">Delete</th>
+						 </tr> 
+						 </thead>
+						 <tbody> 
+							<?php
+		                     $sql="select * from teacher";
+		                     $stmt=$con->prepare($sql);
+		                     $stmt->execute();
+		                     $i=1;
+		                     while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+		                    {
+		                    // Display all data
+		                    ?>
+						 	<tr> 
+						 		<td><?= $i ?></td>
+				                    <?php $i++ ?>
+			                    <td><?= $row['name'] ?></td>
+			                    <td><?= $row['email'] ?></td>
+					 		    <td><img src="<?= 'avatars/'.$row['image'] ?>" height="25" width="25"/></td>
+					 		    <td><?= $row['address'] ?></td>
+			                    <td><?= $row['subject'] ?></td>
+			                    <td><?= $row['password'] ?></td>
+			                    <td> <a href="student.php?case=teacher_edit&id=<?php echo $row['id'];?>" name="edit" class="btn btn-outline-primary" >Update</a> </td>
+			                    <td>
+				                    <form action="student-process.php?case=teacher_delete" onclick="return confirm('Do you want to delete')" method="post">
+					                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+					                    <input type="hidden" name="image" value="<?php echo $row['image']; ?>">
+					                    <input type="submit" name="delete" class="btn btn-danger" value="Delete">
+				                    </form>
+			                    </td>
+						 	</tr>
+						 <?php }  ?>
+						 		  </tbody>
+						 	 </table> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--footer-->
+		<div class="footer">
+		   <p>&copy; 2018 Glance Design Dashboard. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">w3layouts</a></p>
+	   </div>
+        <!--//footer-->
+	</div>
+
+<?php	
+	}
+
+	if ($_REQUEST['case']=="teacher_edit") {
+	?>
+
+		<!-- //header-ends -->
+		<!-- main content start-->
+		<div id="page-wrapper">
+			<div class="main-page">
+				<div class="forms">
+					<h2 class="title1">Forms</h2>
+					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
+						<div class="form-title">
+							<h4>Teacher Form</h4>
+						</div>
+				
+						<?php
+		                     $sql="select * from teacher where id={$_GET['id']}";
+		                     $stmt=$con->prepare($sql);
+		                     $stmt->execute();
+		                     $i=1;
+		                     $row=$stmt->fetch(PDO::FETCH_ASSOC);
+
+		                   ?>
+						<div class="form-body">
+							<form action="student-process.php?case=teacher_update" method="post" enctype="multipart/form-data">
+							 <div class="form-group"> <label for="exampleInputEmail1">Name</label> <input type="name" name="name" class="form-control" value="<?php echo $row['name'] ?>" id="exampleInputEmail1" placeholder="Name">
+							 </div>
+
+							  <div class="form-group"> <label for="exampleInputPassword1">Email</label> <input type="email" class="form-control" name="email" value="<?php echo $row['email'] ?>" id="exampleInputPassword1" placeholder="Email">
+							 </div>
+							  <div class="form-group"> <label for="exampleInputPassword1">Address</label> <input type="text" name="address" value="<?php echo $row['address'] ?>" class="form-control" id="exampleInputPassword1" placeholder="Address">
+							 </div>
+							 <input type="hidden" name="id" value="<?= $_GET['id']?>">
+							 <div class="form-group"> <label for="exampleInputPassword1">Subject</label> <input type="text" class="form-control" value="<?php echo $row['subject'] ?>" name="subject" id="exampleInputPassword1" placeholder="Subject">
+							 </div>
+
+							  <div class="form-group"> <label for="exampleInputPassword1">Password</label> <input type="text" class="form-control" value="<?php echo $row['password'] ?>" name="password" id="exampleInputPassword1" placeholder="Password">
+							 </div>
+							  <div class="form-group"> <label for="exampleInputFile">Image</label>
+							  <img src="<?= 'avatars/'.$row['image'] ?>" height="25" width="25"/>
+							   <input type="file" name="image" id="exampleInputFile">
+							  </div>
+							  <button type="submit" class="btn btn-default">Submit</button> 
+						</form> 
+						</div>
+					</div>
+			
+				</div>
+			</div>
+		</div>
+		<!-- footer -->
+		<div class="footer">
+		   <p>&copy; 2018 Glance Design Dashboard. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">w3layouts</a></p>
+	   </div>
+
+
+	<?php
+	}
+	if ($_REQUEST['case']=="student1") {
+	?>
+	
+		<!-- //header-ends -->
+		<!-- main content start-->
+		<div id="page-wrapper">
+			<div class="main-page">
+				<div class="forms">
+					<h2 class="title1">Forms</h2>
+					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
+						<div class="form-title">
+							<h4>Student Form</h4>
+						</div>
+				
+						<?php
+		                     // $sql="select * from teacher where id={$_GET['id']}";
+		                     // $stmt=$con->prepare($sql);
+		                     // $stmt->execute();
+		                     // $i=1;
+		                     // $row=$stmt->fetch(PDO::FETCH_ASSOC);
+
+		                   ?>
+						<div class="form-body">
+							<form action="student-process.php?case=student1_insert" method="post" enctype="multipart/form-data">
+							 <div class="form-group"> <label for="exampleInputEmail1">Name</label> <input type="name" name="name" class="form-control" required id="exampleInputEmail1" placeholder="Name">
+							 </div>
+
+							 <div class="form-group"> <label for="exampleInputPassword1">Rollno.</label> <input type="text" class="form-control" required="" name="rollno" id="exampleInputPassword1" placeholder="Rollno">
+							 </div>
+
+							  <div class="form-group"> <label for="exampleInputPassword1">Email</label> <input type="email" class="form-control" name="email" required="" id="exampleInputPassword1" placeholder="Email">
+							 </div>
+
+							  <div class="form-group"> <label for="exampleInputPassword1">Address</label> <input type="text" name="address" required="" class="form-control" id="exampleInputPassword1" placeholder="Address">
+							 </div>
+							  <div class="form-group"> <label for="exampleInputPassword1">Password</label> <input type="password" name="password" required="" class="form-control" id="exampleInputPassword1" placeholder="Password">
+							 </div>
+
+							<div class="form-group"> <label for="exampleInputEmail1">Select Class</label>
+							  <select class="form-control" id="class_id" name="class_id" placeholder="Select Class">
+							  <?php
+							  	$sql3="select * from class";
+							  	$stmt3=$con->prepare($sql3);
+								$stmt3->execute();
+								while($row3=$stmt3->fetch(PDO::FETCH_ASSOC)){
+							  ?>
+							      <option value="<?php echo $row3['id']; ?>"><?php echo $row3['name']; ?></option>
+							 <?php } ?>
+							   </select>
+							 </div> 
+
+							  <div class="form-group"> <label for="exampleInputFile">Image</label>
+							   <input type="file" name="image" required="" id="exampleInputFile">
+							  </div>
+							  <button type="submit" class="btn btn-default">Submit</button> 
+						</form> 
+						</div>
+					</div>
+			
+				</div>
+			</div>
+		</div>
+		<!-- footer -->
+		<div class="footer">
+		   <p>&copy; 2018 Glance Design Dashboard. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">w3layouts</a></p>
+	   </div>
+
+
+	<?php
+	}
+	if ($_REQUEST["case"]=="display_student1") { ?>
+		<!-- main content start-->
+		<div id="page-wrapper">
+			<div class="main-page">
+				<div class="tables">
+					<div class="table-responsive bs-example widget-shadow">
+						<h4>Student Table</h4>
+						<a href="student.php?case=student1"><button class="btn btn-primary">Add</button></a>
+						<br><br>
+						<table class="table table-bordered"> 
+						<thead>
+						 <tr> 
+						 	<th scope="col">Sl no.</th>
+		                    <th scope="col">Name</th>
+		                    <th scope="col">Rollno</th>
+		                    <th scope="col">Eamil</th>
+		                    <th scope="col">image</th>
+		                    <th scope="col">Address</th>
+		                    <th scope="col">class</th>
+		                    <th scope="col">Password</th>
+		                    <th scope="col">Update</th>
+		                    <th scope="col">Delete</th>
+						 </tr> 
+						 </thead>
+						 <tbody> 
+							<?php
+		                     $sql="select * from studen1";
+		                     $stmt=$con->prepare($sql);
+		                     $stmt->execute();
+		                     $i=1;
+		                     while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+		                    {
+		                    // Display all data
+		                    ?>
+						 	<tr> 
+						 		<td><?= $i ?></td>
+				                    <?php $i++ ?>
+			                    <td><?= $row['name'] ?></td>
+			                    <td><?= $row['rollno'] ?></td>
+			                    <td><?= $row['email'] ?></td>
+					 		    <td> <img src="<?= 'avatars/'.$row['image'] ?>" height="25" width="25"/></td>
+					 		    <td><?= $row['address'] ?></td>
+			                    <td>
+			                    	<?php
+			                    	$sql2="select name from class where id={$row['class_id']}";
+			                    	$stmt2=$con->prepare($sql2);
+		                     		$stmt2->execute();
+		                     		$row12=$stmt2->fetch(PDO::FETCH_ASSOC);
+		                     		echo $row12["name"];
+			                    	?>
+			                    </td>
+			                    <td><?= $row['password'] ?></td>
+			                    <td> <a href="student.php?case=student1_edit&id=<?php echo $row['id'];?>" name="edit" class="btn btn-outline-primary" >Update</a> </td>
+			                    <td>
+				                    <form action="student-process.php?case=student1_delete" onclick="return confirm('Do you want to delete')" method="post">
+					                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+					                    <input type="hidden" name="image" value="<?php echo $row['image']; ?>">
+					                    <input type="submit" name="delete" class="btn btn-danger" value="Delete">
+				                    </form>
+			                    </td>
+						 	</tr>
+						 <?php }  ?>
+						 		  </tbody>
+						 	 </table> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--footer-->
+		<div class="footer">
+		   <p>&copy; 2018 Glance Design Dashboard. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">w3layouts</a></p>
+	   </div>
+        <!--//footer-->
+	</div>
+<?php
+	}
+	if ($_REQUEST['case']=='student1_edit') { ?>
+
+		<!-- //header-ends -->
+		<!-- main content start-->
+		<div id="page-wrapper">
+			<div class="main-page">
+				<div class="forms">
+					<h2 class="title1">Forms</h2>
+					<div class="form-grids row widget-shadow" data-example-id="basic-forms"> 
+						<div class="form-title">
+							<h4>Student Form</h4>
+						</div>
+				
+						<?php
+		                     $sql="select * from studen1 where id={$_GET['id']}";
+		                     $stmt=$con->prepare($sql);
+		                     $stmt->execute();
+		                     $i=1;
+		                     $row=$stmt->fetch(PDO::FETCH_ASSOC);
+
+		                   ?>
+						<div class="form-body">
+							<form action="student-process.php?case=student1_update" method="post" enctype="multipart/form-data">
+							 <div class="form-group"> <label for="exampleInputEmail1">Name</label> <input type="name" name="name" class="form-control" value="<?php echo $row['name'] ?>" required id="exampleInputEmail1" placeholder="Name">
+							 </div>
+
+							 <div class="form-group"> <label for="exampleInputPassword1">Rollno.</label> <input type="text" class="form-control" required="" name="rollno" id="exampleInputPassword1" value="<?php echo $row['rollno'] ?>" placeholder="Rollno">
+							 </div>
+
+							  <div class="form-group"> <label for="exampleInputPassword1">Email</label> <input type="email" class="form-control" name="email" value="<?php echo $row['email'] ?>" required="" id="exampleInputPassword1" placeholder="Email">
+							 </div>
+							 <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
+							 <div class="form-group"> <label for="exampleInputPassword1">Address</label> <input type="text" name="address" required="" class="form-control" id="exampleInputPassword1" value="<?php echo $row['address'] ?>" placeholder="Address">
+							 </div>
+							 <div class="form-group"> <label for="exampleInputPassword1">Password</label> <input type="password" name="password" required="" class="form-control" id="exampleInputPassword1" value="<?php echo $row['password'] ?>" placeholder="Password">
+							 </div>
+
+							<div class="form-group"> <label for="exampleInputEmail1">Select Class</label>
+							  <select class="form-control" id="class_id" name="class_id" placeholder="Select Class">
+							  <?php
+							  	$sql3="select * from class";
+							  	$stmt3=$con->prepare($sql3);
+								$stmt3->execute();
+								while($row3=$stmt3->fetch(PDO::FETCH_ASSOC)){
+							  ?>
+							      <option value="<?php echo $row3['id']; ?>"><?php echo $row3['name']; ?></option>
+							 <?php } ?>
+							   </select>
+							 </div> 
+
+							  <div class="form-group"> <label for="exampleInputFile">Image</label>
+							   <input type="file" name="image" id="exampleInputFile">
+							  </div>
+							  <button type="submit" class="btn btn-default">Submit</button> 
+						</form> 
+						</div>
+					</div>
+			
+				</div>
+			</div>
+		</div>
+		<!-- footer -->
+		<div class="footer">
+		   <p>&copy; 2018 Glance Design Dashboard. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">w3layouts</a></p>
+	   </div>
+<?php
+	}
+	?>
+<?php
 
 	include_once("footer.php");
 	?>
